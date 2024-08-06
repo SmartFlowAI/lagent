@@ -308,12 +308,15 @@ class LMDeployServer(BaseModel):
         self.model_name = model_name
         # TODO get_logger issue in multi processing
         import lmdeploy
+        from lmdeploy import TurbomindEngineConfig
+        backend_config = TurbomindEngineConfig(cache_max_entry_count=0.2)
         self.client = lmdeploy.serve(
             model_path=self.path,
             model_name=model_name,
             server_name=server_name,
             server_port=server_port,
             tp=tp,
+            backend_config=backend_config,
             log_level=log_level,
             **serve_cfg)
 
